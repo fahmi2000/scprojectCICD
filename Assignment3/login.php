@@ -3,7 +3,7 @@
 $servername = "localhost";  // replace with your database servername
 $username = "root";  // replace with your database username
 $password = "Cloudhosting123@";  // replace with your database password
-$dbname = "ass3";  // replace with your database name
+$dbname = "ass3";  // replace with your database names
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
