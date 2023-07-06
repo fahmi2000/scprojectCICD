@@ -72,7 +72,7 @@ $jsonData = json_encode($data, JSON_PRETTY_PRINT);
 </head>
 <body>
     <div class="container">
-        <h2>Customer Information</h2>
+        <h2>Customer's Information</h2>
         <table>
             <tr>
                 <th>Customer ID</th>
