@@ -1,18 +1,22 @@
-FROM php:latest
+FROM scratch
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip
+# Copy PHP from your local installation
+COPY C:\laragon\bin\php\php-8.1.10-Win32-vs16-x64\php.exe /usr/local/bin/php
 
-# Copy project files to the container
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+# Set the working directory
+WORKDIR /var/www/html
+
+# Copy your PHP application files
 COPY . /var/www/html
 
 # Install project dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set the working directory
-WORKDIR /var/www/html
+# Expose the port if needed
+# EXPOSE 80
 
-# Install project dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Start the PHP application
+CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www/html"]
