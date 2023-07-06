@@ -1,0 +1,62 @@
+`<!DOCTYPE html>
+<html lang="en">
+  	<head>
+    	<title>GET all contacts</title>
+    	<meta charset="utf-8">
+  	</head>
+  	<body>
+      <table border="1" id="tbl">
+         <thead>
+            <tr>
+               <th>Index</th> 
+               <th>Name</th>               
+               <th>Email</th>
+               <th>Mobile No</th>
+               <th>Photo</th>
+               <th>Status</th>
+            </tr>   
+         </thead>
+         <tbody>            
+         </tbody>
+      </table>
+   	<script src="js/jquery-3.2.1.min.js"></script>
+   	<script>
+			$(function() { 
+            
+            //CONTACTS CRUD - GET all contacts
+            $.ajax({
+               type: "get", 
+               url: 'api/getall/contacts',
+               dataType: "json",
+               success: function(data){
+                  var index = 0;
+
+                  for (var x in data) { 
+
+                     index = parseInt(index) + 1;
+
+                     var status = "";
+                     if (data[x].status == 0)   
+                        status = "Inactive";
+                     else
+                        status = "Active";
+
+                     $("#tbl tbody").append("<tr>" +
+                                          "   <td>" + data[x].id + "</td>" +
+                                          "   <td>" + data[x].name + "</td>" +
+                                          "   <td>" + data[x].email + "</td>" + 
+                                          "   <td>" + data[x].mobileno + "</td>" +
+                                          "   <td>" + data[x].photo + "</td>" +
+                                          "   <td>" + status + "</td>" +
+                                          "</tr>");
+                  }                  
+               },
+               error: function() {
+                  console.log("error");
+               }
+            });
+            
+			});
+		</script>
+  	</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  	<head>
+    	<title>UPDATE contact via id</title>
+    	<meta charset="utf-8">
+  	</head>
+  	<body>
+
+      <form id="form1" name="form1" method="post">
+         <label for="id">Index:</label><br>
+         <input type="text" id="id" name="id" required><br><br>
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="mobileno">Mobileno:</label><br>
+        <input type="text" id="mobileno" name="mobileno" required><br><br>
+                
+        <input type="submit" value="Submit">
+      </form> 
+   		
+      <script src="js/jquery-3.2.1.min.js"></script>
+   	<script>
+         $(function() {
+
+            var id = 9;
+
+            //get contact id = 9
+            //CONTACTS CRUD - GET contact via id
+            $.ajax({
+               type: "get", 
+               url: 'api/v1/contacts/' + id,
+               dataType: "json",
+               success: function(data){
+
+                  $("#name").val(data.name);
+                  $("#email").val(data.email);
+                  $("#mobileno").val(data.mobileno);
+               },
+               error: function() {
+                  console.log("error");
+               }
+            }); 
+
+            $("#form1").submit(function(event){
+               event.preventDefault();
+
+               //CONTACTS CRUD - UPDATE via id
+               var obj = new Object();
+               id = $("#id").val();
+               obj.name = $("#name").val();
+               obj.email = $("#email").val();
+               obj.mobileno = $("#mobileno").val();
+
+               $.ajax({
+                  type: "put",
+                  url: 'api/v1/contacts/' + id,
+                  contentType: 'application/json',
+                  data: JSON.stringify(obj),            
+                  dataType: "json",
+                  success: function(data){
+
+                     if (data.updatestatus) {
+
+                        alert("contact update successful");
+
+                     } 
+                     else {
+
+                        alert("contact update failed - please try again: " + data.error)
+                     }
+
+                  },
+                  error: function() {
+                     console.log("error");
+                  }
+               });
+            });
+
+         });
+		</script>
+  	</body>
+</html>

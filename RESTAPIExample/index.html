@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<style>
+th,td {
+  padding: 5px;
+}
+</style>
+<body>
+
+<h2>The XMLHttpRequest Object</h2>
+
+<form action="getStudent.php"> 
+  <select name="customers" onchange="showCustomer(this.value)">
+    <option value="">Select a customer:</option>
+    <option value="1">Zul</option>
+    <option value="2 ">Ariff</option>
+    <option value="3">Alep</option>
+    <option value="4">Fahmi</option>
+  </select>
+</form>
+<br>
+<div id="studentId">Student info will be listed here...</div>
+
+<script>
+function showCustomer(str) {
+  if (str == "") {
+    document.getElementById("studentId").innerHTML = "";
+    return;
+  }
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    document.getElementById("studentId").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "getStudent.php?q="+str);
+  xhttp.send();
+}
+</script>
+</body>
+</html>
